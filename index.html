@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#f6f0e3">
+<title>Moyo — Grow a calmer mind</title>
+<meta name="description" content="Moyo is your 3D clay mind-companion. Build tiny rituals, check in daily, and watch your Moyo grow.">
+<link rel="icon" href="assets/moyo-stage3.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="phone">
+
+  <header class="top">
+    <div class="logo"><img src="assets/moyo-stage3.png" alt="Moyo"><span>Moyo</span></div>
+    <button class="pro-pill" id="proPill" onclick="go('pro')">GO PRO</button>
+  </header>
+
+  <main>
+    <!-- HOME -->
+    <section class="view" id="v-home">
+      <div class="clay pet-hero">
+        <img class="pet" id="petImg" src="assets/moyo-stage1.png" alt="Your Moyo">
+        <div class="pet-name" id="petGreet">Hello</div>
+        <div class="pet-stage" id="petStage">Sproutling</div>
+        <div class="stage-dots" id="stageDots"><i></i><i></i><i></i><i></i></div>
+        <div class="streak-row">
+          <span class="chip"><img src="assets/icon-bolt.png" alt=""> <b id="streakN">0</b>&nbsp;day streak</span>
+          <span class="chip"><img src="assets/icon-check.png" alt=""> <b id="doneN">0</b>&nbsp;rituals grown</span>
+        </div>
+      </div>
+
+      <h2 class="vtitle mt">How are you feeling?</h2>
+      <p class="vsub">Tap one — Moyo remembers.</p>
+      <div class="clay-sm" style="padding:14px">
+        <div class="mood-row" id="moodRow"></div>
+      </div>
+
+      <h2 class="vtitle mt">Today's rituals</h2>
+      <p class="vsub" id="ritualSub">Small steps, soft landings.</p>
+      <div id="ritualList"></div>
+      <button class="btn btn-block" onclick="openAddRitual()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        Add ritual
+      </button>
+      <p class="small center mt" id="freeNote"></p>
+    </section>
+
+    <!-- COMPANION -->
+    <section class="view" id="v-chat">
+      <h2 class="vtitle">Talk to Moyo</h2>
+      <p class="vsub" id="chatSub">Your mind-companion is listening.</p>
+      <div class="clay-sm" style="padding:14px 12px">
+        <div id="chatlog"></div>
+        <div class="chatbar">
+          <input id="chatIn" class="clay-in" placeholder="Tell Moyo anything..." autocomplete="off" maxlength="300">
+          <button class="sendbtn" onclick="sendChat()" aria-label="Send">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#234d38" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="notice clay-sm mt" id="chatMem"></div>
+    </section>
+
+    <!-- BREATHE -->
+    <section class="view" id="v-breathe">
+      <h2 class="vtitle">Breathe with Moyo</h2>
+      <p class="vsub">Follow the puff. In for 4, hold for 4, out for 6.</p>
+      <div class="clay breath-stage">
+        <div id="breathBall">Ready</div>
+        <div class="breath-count" id="breathCount">3 rounds</div>
+        <button class="btn btn-primary mt" id="breathBtn" onclick="startBreath()">Start breathing</button>
+      </div>
+      <div class="notice clay-sm">Slow breathing calms your nervous system in under two minutes. Pro unlocks guided programs for sleep, focus and calm.</div>
+    </section>
+
+    <!-- STATS -->
+    <section class="view" id="v-stats">
+      <h2 class="vtitle">Your garden</h2>
+      <p class="vsub">Every check-in waters your Moyo.</p>
+      <div class="stat-grid">
+        <div class="clay-sm stat"><b id="sStreak">0</b><span>day streak</span></div>
+        <div class="clay-sm stat"><b id="sTotal">0</b><span>rituals completed</span></div>
+        <div class="clay-sm stat"><b id="sMood">–</b><span>avg mood (7d)</span></div>
+        <div class="clay-sm stat"><b id="sBest">0</b><span>best streak</span></div>
+      </div>
+      <h2 class="vtitle">This week</h2>
+      <div class="clay-sm bars" id="weekBars" style="margin-bottom:34px"></div>
+      <h2 class="vtitle">Mood trail</h2>
+      <div class="clay-sm mooddots" id="moodTrail"></div>
+      <div class="notice clay-sm mt" id="proStatsNote"></div>
+    </section>
+
+    <!-- PRO -->
+    <section class="view" id="v-pro">
+      <h2 class="vtitle">Moyo Pro</h2>
+      <p class="vsub">More rituals, deeper memory, faster growth.</p>
+      <div id="proStatus"></div>
+
+      <div id="paystep1" class="paystep on">
+        <div class="clay plan" data-plan="monthly" onclick="pickPlan('monthly')">
+          <div class="pname">Monthly</div><div class="pprice">$3.99<small> / month</small></div>
+          <ul><li>Unlimited rituals</li><li>Full companion memory</li><li>All breathing programs</li></ul>
+        </div>
+        <div class="clay plan" data-plan="yearly" onclick="pickPlan('yearly')">
+          <div class="tag">SAVE 37%</div>
+          <div class="pname">Yearly</div><div class="pprice">$29.99<small> / year</small></div>
+          <ul><li>Everything in Monthly</li><li>Exclusive golden Moyo skin</li><li>Priority new features</li></ul>
+        </div>
+        <div class="clay plan" data-plan="lifetime" onclick="pickPlan('lifetime')">
+          <div class="tag">BEST VALUE</div>
+          <div class="pname">Lifetime</div><div class="pprice">$79<small> one-time</small></div>
+          <ul><li>Pay once, yours forever</li><li>All future Pro features</li><li>Founder badge</li></ul>
+        </div>
+        <button class="btn btn-primary btn-block mt" id="continuePay" onclick="toPayStep2()" disabled>Select a plan first</button>
+        <p class="small center mt">Secure checkout with Bitcoin. No account, no card, no KYC — just your wallet.</p>
+      </div>
+
+      <div id="paystep2" class="paystep">
+        <div class="clay qrwrap">
+          <h3 style="margin-bottom:4px">Send exact amount</h3>
+          <p class="small" id="payAmountLine">…</p>
+          <img id="payQR" alt="Payment QR code">
+          <div class="addr" id="payAddr"></div>
+          <button class="btn copybtn" onclick="copyAddr()">Copy address</button>
+        </div>
+        <div class="clay-sm mt" style="padding:16px">
+          <b style="font-size:15px">Step 2 — paste your transaction ID</b>
+          <p class="small" style="margin:6px 0">After sending from any Bitcoin wallet, paste the transaction ID (txid) below. Moyo verifies it on the blockchain and unlocks Pro instantly.</p>
+          <input id="txidIn" class="field clay-in" placeholder="paste txid here..." autocomplete="off" spellcheck="false">
+          <button class="btn btn-primary btn-block" id="verifyBtn" onclick="verifyPayment()">Verify payment</button>
+          <div id="verifySpin" class="spin hidden"></div>
+          <div id="verifyMsg"></div>
+        </div>
+        <button class="btn btn-block mt" onclick="toPayStep1()">Back to plans</button>
+      </div>
+
+      <div id="paystep3" class="paystep">
+        <div class="clay center" style="padding:34px 22px">
+          <img src="assets/moyo-stage4.png" style="width:130px;height:130px;border-radius:50%;object-fit:cover;margin-bottom:10px" alt="Pro Moyo">
+          <h3 style="font-size:24px">Welcome to Pro</h3>
+          <p class="small" style="margin:8px 0 18px">Your Moyo just grew golden leaves. Everything is unlocked.</p>
+          <button class="btn btn-primary btn-block" onclick="go('home')">Meet your Moyo</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="view" id="v-more">
+      <h2 class="vtitle">Settings</h2>
+      <p class="vsub">Make Moyo yours.</p>
+      <div class="clay-sm" style="padding:8px 16px">
+        <div class="kv"><span>Your name</span><span id="setName">–</span></div>
+        <div class="kv"><span>Focus</span><span id="setFocus">–</span></div>
+        <div class="kv"><span>Plan</span><span id="setPlan">Free</span></div>
+        <div class="kv" style="border:none"><span>Moyo's stage</span><span id="setStage">–</span></div>
+      </div>
+      <button class="btn btn-block mt" onclick="rename()">Change name</button>
+      <button class="btn btn-block mt" onclick="resetAll()">Reset everything</button>
+      <p class="small center mt">Moyo keeps everything on your device.<br>No account. No tracking. Your mind, your data.</p>
+      <p class="small center mt" style="opacity:.6">Moyo v1.0 · Made with soft clay</p>
+    </section>
+  </main>
+
+  <nav class="tabs">
+    <button class="tab on" data-v="home" onclick="go('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-6h6v6"/></svg>Home</button>
+    <button class="tab" data-v="chat" onclick="go('chat')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg>Companion</button>
+    <button class="tab" data-v="breathe" onclick="go('breathe')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 8h9a3 3 0 1 0-3-3"/><path d="M3 12h13a3 3 0 1 1-3 3"/><path d="M3 16h6a2.5 2.5 0 1 1-2.5 2.5"/></svg>Breathe</button>
+    <button class="tab" data-v="stats" onclick="go('stats')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>Garden</button>
+    <button class="tab" data-v="more" onclick="go('more')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2-1.2L14.2 3h-4l-.4 2.7a7 7 0 0 0-2 1.2l-2.3-1-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2 1.2l.4 2.7h4l.4-2.7a7 7 0 0 0 2-1.2l2.3 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg>More</button>
+  </nav>
+</div>
+
+<!-- onboarding -->
+<div id="onboard" class="hidden">
+  <div class="clay ob-card">
+    <img src="assets/moyo-stage2.png" alt="Moyo">
+    <h1>Meet Moyo</h1>
+    <p>Your soft little mind-companion.<br>Build tiny rituals, check in daily,<br>and watch your Moyo grow.</p>
+    <input id="obName" class="clay-in" placeholder="What should Moyo call you?" maxlength="20" autocomplete="off">
+    <div class="focus-grid" id="obFocus">
+      <button class="focus clay-sm" data-f="calm"><img src="assets/icon-leaf.png" alt="">Calm</button>
+      <button class="focus clay-sm" data-f="focus"><img src="assets/icon-bolt.png" alt="">Focus</button>
+      <button class="focus clay-sm" data-f="energy"><img src="assets/icon-heart.png" alt="">Energy</button>
+      <button class="focus clay-sm" data-f="sleep"><img src="assets/icon-moon.png" alt="">Sleep</button>
+    </div>
+    <button class="btn btn-primary btn-block" onclick="finishOnboard()">Hatch my Moyo</button>
+  </div>
+</div>
+
+<!-- modal -->
+<div id="modal"><div class="clay sheet" id="sheet"></div></div>
+
+<script src="config.js"></script>
+<script src="moyo.js"></script>
+<script src="pay.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
